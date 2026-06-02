@@ -53,6 +53,25 @@
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .bar{height:7px;border-radius:4px;background:var(--blue);opacity:.85}
   .barcell{width:26%}
+
+  .leads{display:flex;flex-direction:column;gap:8px}
+  .lead{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .lead-head{display:flex;align-items:center;gap:13px;padding:13px 16px;cursor:pointer;user-select:none}
+  .lead-head:hover{background:var(--panel2)}
+  .rank{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;width:18px;text-align:center;flex:none}
+  .lead-name{font-weight:600;font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .trend{font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:3px 9px;border-radius:20px;white-space:nowrap;text-transform:uppercase}
+  .trend.adv{color:#bff0d6;background:rgba(63,178,127,.16)}
+  .trend.hold{color:#e7cf93;background:rgba(200,162,74,.16)}
+  .trend.ghost{color:#eeb4a4;background:rgba(192,86,59,.18)}
+  .pct{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;min-width:46px;text-align:right}
+  .chev{color:var(--muted);font-size:11px;transition:transform .18s;flex:none}
+  .lead.open .chev{transform:rotate(90deg)}
+  .scoremeter{height:4px;background:var(--line)}
+  .scoremeter > i{display:block;height:100%}
+  .lead-body{max-height:0;overflow:hidden;transition:max-height .22s ease}
+  .lead.open .lead-body{max-height:220px}
+  .lead-body p{margin:0;padding:13px 18px 15px 49px;font-size:13.5px;color:var(--muted);line-height:1.6}
   .foot{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.7}
 </style>
 </head>
@@ -105,17 +124,15 @@
     </div>
   </div>
 
-  <p class="section-title">Pipeline by stage</p>
-  <table>
-    <thead><tr><th>Stage</th><th class="num">Deals</th><th class="num">Value</th><th class="barcell"></th></tr></thead>
-    <tbody id="stageRows"></tbody>
-  </table>
+  <p class="section-title">Top 10 leads — closest to signing this month</p>
+  <div class="leads" id="leadRows"></div>
 
   <p class="foot">
-    Projected sales is the expected number of homes signing this month, weighted by each deal's probability.
-    The target odds use a Poisson-binomial of the full pipeline. Values are gross pipeline value, not a
-    forecast guarantee. This page shows aggregate figures only, with no client-identifying information,
-    and refreshes automatically through the working day.
+    Projected sales is the expected number of homes signing this month, the sum of every active deal's
+    probability of closing. The target odds use a Poisson-binomial across the full pipeline. Each lead's
+    percentage is its individual chance of signing this month; tap a name to see where that buyer sits.
+    Lead names are shown to the exec team only &mdash; this page is unindexed and link-restricted.
+    Figures refresh automatically every hour through the working day.
   </p>
 </div>
 
@@ -123,7 +140,7 @@
 // Replaced automatically by the hourly refresh task.
 /* PIPELINE_DATA_START */
 window.PIPELINE_DATA = {
-  "updated": "2 June 2026, 16:21 SAST",
+  "updated": "2 June 2026, 17:46 SAST",
   "currency": "R",
   "banked": {
     "value": 0,
@@ -133,53 +150,93 @@ window.PIPELINE_DATA = {
     "value": 28649700,
     "count": 3
   },
-  "expected": 3.79,
-  "projected": 3.79,
+  "expected": 2.6,
+  "projected": 2.6,
   "pipelineValue": 160599000,
   "dealCount": 27,
   "defaultTarget": 4,
   "targetProbs": {
-    "1": 99.8,
-    "2": 96.8,
-    "3": 82.5,
-    "4": 55.9,
-    "5": 28.9,
-    "6": 11.2,
-    "7": 3.3,
-    "8": 0.8,
-    "9": 0.1,
+    "1": 94.7,
+    "2": 76.8,
+    "3": 49.6,
+    "4": 25.0,
+    "5": 9.9,
+    "6": 3.1,
+    "7": 0.8,
+    "8": 0.2,
+    "9": 0.0,
     "10": 0.0
   },
-  "stages": [
+  "topLeads": [
     {
-      "name": "OTP Sent",
-      "count": 1,
-      "value": 8449900
+      "rank": 1,
+      "name": "Francois",
+      "pct": 42,
+      "trend": "Holding",
+      "summary": "Reserved on B48 after viewing; weighing the locked addendum, his reply imminent \u2014 signs if he accepts the terms."
     },
     {
-      "name": "Reservation",
-      "count": 1,
-      "value": 8149900
+      "rank": 2,
+      "name": "Megan",
+      "pct": 40,
+      "trend": "Advancing",
+      "summary": "Narrowed to A20, flying her parents in 8 June for the deciding viewing; hard year-end deadline \u2014 top June close."
     },
     {
-      "name": "Interested Buyer",
-      "count": 5,
-      "value": 45399500
+      "rank": 3,
+      "name": "Craig",
+      "pct": 22,
+      "trend": "Advancing",
+      "summary": "Hot Type A buyer, viewing booked 13 June on his return to SA; still weighing one other estate."
     },
     {
-      "name": "Property Selection",
-      "count": 1,
-      "value": 7500000
+      "rank": 4,
+      "name": "Thamsanqa",
+      "pct": 18,
+      "trend": "Ghosting",
+      "summary": "OTP in hand but gone quiet \u2014 three unanswered calls and the pack still unopened; on a WhatsApp-only watch this week."
     },
     {
-      "name": "Client Viewed",
-      "count": 4,
-      "value": 21000000
+      "rank": 5,
+      "name": "Neil",
+      "pct": 15,
+      "trend": "Holding",
+      "summary": "Verbally committed to Type A but must sell his home first; exploring a reservation deposit to lock in."
     },
     {
-      "name": "Engaged",
-      "count": 15,
-      "value": 70099700
+      "rank": 6,
+      "name": "Tremaine",
+      "pct": 15,
+      "trend": "Advancing",
+      "summary": "Hot Type A buyer, viewed 17 May; decision hinges on a Paarl vs Stellenbosch schooling choice."
+    },
+    {
+      "rank": 7,
+      "name": "Patrick",
+      "pct": 9,
+      "trend": "Advancing",
+      "summary": "Genuine A/E intent; viewing lined up once his wife returns 5 June, Saturday show booked."
+    },
+    {
+      "rank": 8,
+      "name": "Andrew",
+      "pct": 8,
+      "trend": "Advancing",
+      "summary": "UK buyer re-engaged on B/F pricing and a video walkthrough; weighing F47 vs Villa B, awaiting his reply."
+    },
+    {
+      "rank": 9,
+      "name": "Tyrone",
+      "pct": 7,
+      "trend": "Advancing",
+      "summary": "Fresh A/E enquiry, keen but missed the weekend show \u2014 chasing a weekday viewing slot."
+    },
+    {
+      "rank": 10,
+      "name": "Ifran",
+      "pct": 6,
+      "trend": "Holding",
+      "summary": "On hold, paired to Neil's B51 deal \u2014 reactivates with the joint discount once Neil commits."
     }
   ]
 };
@@ -206,13 +263,27 @@ window.PIPELINE_DATA = {
   document.getElementById("pipeSub").textContent = full(d.pipelineValue);
   document.getElementById("countVal").textContent = d.dealCount;
 
-  // stage table
-  var max = Math.max.apply(null, d.stages.map(function(s){return s.value;}))||1;
-  document.getElementById("stageRows").innerHTML = d.stages.map(function(s){
-    var w = Math.max(4, Math.round(s.value/max*100));
-    return "<tr><td>"+s.name+"</td><td class='num'>"+s.count+"</td><td class='num'>"+full(s.value)+
-           "</td><td class='barcell'><div class='bar' style='width:"+w+"%'></div></td></tr>";
+  // top 10 leads board
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function trendClass(t){ t=(t||"").toLowerCase(); return t==="advancing"?"adv":t==="ghosting"?"ghost":"hold"; }
+  function pctColor(p){ return p>=35?COL.green : p>=15?COL.gold : COL.muted; }
+  document.getElementById("leadRows").innerHTML = (d.topLeads||[]).map(function(l){
+    var tc=trendClass(l.trend), col=pctColor(l.pct), w=Math.max(3, Math.min(100, l.pct));
+    return "<div class='lead'>"+
+      "<div class='lead-head'>"+
+        "<span class='rank'>"+l.rank+"</span>"+
+        "<span class='lead-name'>"+esc(l.name)+"</span>"+
+        (l.trend?"<span class='trend "+tc+"'>"+esc(l.trend)+"</span>":"")+
+        "<span class='pct' style='color:"+col+"'>"+l.pct+"%</span>"+
+        "<span class='chev'>&#9654;</span>"+
+      "</div>"+
+      "<div class='scoremeter'><i style='width:"+w+"%;background:"+col+"'></i></div>"+
+      "<div class='lead-body'><p>"+esc(l.summary||"No summary available.")+"</p></div>"+
+    "</div>";
   }).join("");
+  Array.prototype.forEach.call(document.querySelectorAll(".lead-head"), function(h){
+    h.addEventListener("click", function(){ h.parentNode.classList.toggle("open"); });
+  });
 
   // odometer + gauge
   var saved = parseInt(localStorage.getItem("dz_target"));
