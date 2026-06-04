@@ -70,8 +70,15 @@
   .scoremeter{height:4px;background:var(--line)}
   .scoremeter > i{display:block;height:100%}
   .lead-body{max-height:0;overflow:hidden;transition:max-height .22s ease}
-  .lead.open .lead-body{max-height:220px}
+  .lead.open .lead-body{max-height:340px}
   .lead-body p{margin:0;padding:13px 18px 15px 49px;font-size:13.5px;color:var(--muted);line-height:1.6}
+  .lead-body p.next-move{padding-top:0;color:var(--ink)}
+  .lead-body p.next-move b{color:var(--gold);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .path{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:16px}
+  .path .headline{font-size:14.5px;line-height:1.6;margin:0 0 12px;color:var(--ink)}
+  .path ul{margin:0;padding-left:20px}
+  .path li{font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:8px}
+  .path li:last-child{margin-bottom:0}
   .foot{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.7}
 </style>
 </head>
@@ -117,11 +124,17 @@
       <div class="status" id="status">—</div>
       <div class="odo">
         <button id="minus" aria-label="lower target">&minus;</button>
-        <div class="t" id="targetNum">4</div>
+        <div class="t" id="targetNum">5</div>
         <button id="plus" aria-label="raise target">+</button>
       </div>
       <div class="odo-cap">Sales target for the month. Adjust to see the odds.</div>
     </div>
+  </div>
+
+  <div class="path" id="pathPanel" style="display:none">
+    <p class="section-title" style="margin:0 0 10px">Path to target — what's missing</p>
+    <p class="headline" id="pathHeadline"></p>
+    <ul id="pathLevers"></ul>
   </div>
 
   <p class="section-title">Top 10 leads — closest to signing this month</p>
@@ -140,7 +153,7 @@
 // Replaced automatically by the hourly refresh task.
 /* PIPELINE_DATA_START */
 window.PIPELINE_DATA = {
-  "updated": "4 June 2026, 19:11 SAST",
+  "updated": "4 June 2026, 21:32 SAST",
   "currency": "R",
   "banked": {
     "value": 0,
@@ -154,15 +167,15 @@ window.PIPELINE_DATA = {
   "projected": 2.6,
   "pipelineValue": 160599000,
   "dealCount": 31,
-  "defaultTarget": 4,
+  "defaultTarget": 5,
   "targetProbs": {
-    "1": 95.5,
-    "2": 78.1,
-    "3": 50.1,
-    "4": 24.4,
-    "5": 9.0,
-    "6": 2.6,
-    "7": 0.6,
+    "1": 95.2,
+    "2": 77.5,
+    "3": 49.7,
+    "4": 24.5,
+    "5": 9.4,
+    "6": 2.8,
+    "7": 0.7,
     "8": 0.1,
     "9": 0.0,
     "10": 0.0
@@ -173,72 +186,92 @@ window.PIPELINE_DATA = {
       "name": "Francois",
       "pct": 55,
       "trend": "Advancing",
-      "summary": "Unit B48 chosen and the last details are being confirmed today - signing follows straight after if the answers land well."
+      "summary": "Has reserved Villa B48 after three viewings and a confirmed deposit, and is now waiting on Legaro's final answer this week before signing, with both sides expecting to wrap it up.",
+      "solution": "Land the final answers from this week's Legaro meeting and book the signing appointment immediately while momentum is high."
     },
     {
       "rank": 2,
       "name": "Megan",
-      "pct": 42,
+      "pct": 40,
       "trend": "Advancing",
-      "summary": "Settled on A20 and bringing her parents through Monday 8 June for the deciding viewing - her year-end move-in deadline works in our favour."
+      "summary": "Has settled on Villa A20 with a year-end move-in in mind and is flying her parents down on 8 June for the final viewing before committing.",
+      "solution": "Make Sunday's parent viewing on A20 flawless and have the paperwork prepped so the offer can go out the same day they say yes."
     },
     {
       "rank": 3,
       "name": "Craig",
-      "pct": 30,
+      "pct": 20,
       "trend": "Advancing",
-      "summary": "Back in the country 12 June and asking sharp closing questions daily - a Saturday 13 June walk-through is held as his decision visit."
+      "summary": "Back in active conversation with detailed cost questions on the Type A homes, returning to South Africa on 12 June with a deciding walk-through pencilled for the 13th, though he is still weighing one other estate.",
+      "solution": "Lock the 13 June walk-through now and have the investment memo plus a unit comparison ready so the decision can land same-day."
     },
     {
       "rank": 4,
-      "name": "Michael Grobler (Agent) - Marcus & Sarah",
-      "pct": 15,
-      "trend": "Advancing",
-      "summary": "Swedish couple call Drakenzicht their first choice; their agent is locking a second viewing for Saturday while price and build timeline stay the open questions."
-    },
-    {
-      "rank": 5,
       "name": "Tremaine",
       "pct": 15,
       "trend": "Holding",
-      "summary": "Said plainly he wants to do a deal - the family is settling which town the daughters will study in before he commits."
+      "summary": "Has viewed and told us directly he wants to do a deal, with the final piece being his daughters' school decision between Paarl and Stellenbosch, expected shortly.",
+      "solution": "Call rather than message to pin down his school decision date, then book the deciding follow-up viewing on the back of it."
+    },
+    {
+      "rank": 5,
+      "name": "Sharon-Ann Van Zyl (Agent) - HP & Ester Van Dyk",
+      "pct": 13,
+      "trend": "Advancing",
+      "summary": "Viewed with their agent this week, loved the estate and are weighing up two villa types with the full pricing detail now in hand.",
+      "solution": "Chase the agent for the couple's reaction to the breakdown and push for a second viewing this week while it's fresh."
     },
     {
       "rank": 6,
-      "name": "Sharon-Ann Van Zyl (Agent) - HP & Ester Van Dyk",
-      "pct": 14,
+      "name": "Michael Grobler (Agent) - Marcus & Sarah",
+      "pct": 10,
       "trend": "Advancing",
-      "summary": "Agent-introduced couple loved the estate on Wednesday's viewing and asked for the full breakdown; awaiting their feedback on a follow-up visit."
+      "summary": "Drakenzicht is their first choice and a second viewing is being lined up through their agent, with price and the wait before move-in the two things they are still weighing.",
+      "solution": "Confirm the second viewing for this week and lead with the full value story to answer their price and timeline hesitation."
     },
     {
       "rank": 7,
-      "name": "Patrick",
+      "name": "Barend",
       "pct": 10,
       "trend": "Advancing",
-      "summary": "Replied warmly on Sunday and proposed visiting this weekend once his wife is back from London - the viewing slot gets locked Friday."
+      "summary": "Reconnected by phone today after a family illness explained his quiet spell; he and his wife are relocating to Stellenbosch for her new job and want to view early next week.",
+      "solution": "Lock the viewing on Monday's call and confirm the day before; the family's relocation gives natural urgency."
     },
     {
       "rank": 8,
-      "name": "Barend",
+      "name": "Patrick",
       "pct": 9,
       "trend": "Advancing",
-      "summary": "Connected by phone today after a quiet spell - the family relocation is live and he wants a viewing early next week."
+      "summary": "Replied warmly and proposed coming to view this weekend once his wife is back from London, with the viewing time being confirmed at the end of this week.",
+      "solution": "Friday call to fix Saturday's viewing time while his wife is back, then confirm on the morning."
     },
     {
       "rank": 9,
-      "name": "Pierre Redman",
+      "name": "Neil",
       "pct": 8,
-      "trend": "Advancing",
-      "summary": "Broke a six-week silence on Sunday and committed to reviewing the last three sub-R7.5M Type A positions, with an answer promised shortly."
+      "trend": "Holding",
+      "summary": "Fully committed to buying and replies warmly, but everything waits on the sale of his Claremont home, where a returning buyer is circling but nothing has closed.",
+      "solution": "Stay close to his Claremont sale and table a reservation structure so he can secure his villa ahead of the sale landing."
     },
     {
       "rank": 10,
-      "name": "Andrew",
-      "pct": 7,
+      "name": "Marni",
+      "pct": 8,
       "trend": "Advancing",
-      "summary": "UK buyer who responds to every touch - the full pricing breakdown went over Sunday and his next reply will show how far the interest runs."
+      "summary": "An overseas couple actively working through the numbers, with the husband asking detailed questions on monthly running costs that were answered this week.",
+      "solution": "Offer the budget call now the levy answer is in, and propose a live video walk-through given they are overseas."
     }
-  ]
+  ],
+  "pathToFive": {
+    "target": 5,
+    "gap": 2.4,
+    "headline": "Banked 0 with an expected 2.6 from the live pipeline, the month is tracking 2.4 sales short of the target of 5.",
+    "levers": [
+      "Close the two live deciders: Francois on Villa B48 off the back of this week's final answers, and Megan on A20 with her parents viewing Sunday 8 June.",
+      "Convert the middle of the board into June commitments: Craig's 13 June walk-through, Tremaine's school decision, and second viewings for the two agent-introduced couples.",
+      "13 of 31 leads are timing-blocked to future months, so the remaining gap will not come from the existing book alone: roughly 6 to 8 new qualified viewings are needed this month to source the last 1 to 2 sales."
+    ]
+  }
 };
 /* PIPELINE_DATA_END */
 
@@ -278,16 +311,27 @@ window.PIPELINE_DATA = {
         "<span class='chev'>&#9654;</span>"+
       "</div>"+
       "<div class='scoremeter'><i style='width:"+w+"%;background:"+col+"'></i></div>"+
-      "<div class='lead-body'><p>"+esc(l.summary||"No summary available.")+"</p></div>"+
+      "<div class='lead-body'><p>"+esc(l.summary||"No summary available.")+"</p>"+
+        (l.solution?"<p class='next-move'><b>Next move</b>"+esc(l.solution)+"</p>":"")+
+      "</div>"+
     "</div>";
   }).join("");
   Array.prototype.forEach.call(document.querySelectorAll(".lead-head"), function(h){
     h.addEventListener("click", function(){ h.parentNode.classList.toggle("open"); });
   });
 
+  // path to target panel
+  if(d.pathToFive && (d.pathToFive.headline || (d.pathToFive.levers||[]).length)){
+    document.getElementById("pathPanel").style.display = "block";
+    document.getElementById("pathHeadline").textContent = d.pathToFive.headline || "";
+    document.getElementById("pathLevers").innerHTML = (d.pathToFive.levers||[]).map(function(x){
+      return "<li>"+esc(x)+"</li>";
+    }).join("");
+  }
+
   // odometer + gauge
   var saved = parseInt(localStorage.getItem("dz_target"));
-  var target = (saved>=1 && saved<=MAXT) ? saved : (d.defaultTarget||4);
+  var target = (saved>=1 && saved<=MAXT) ? saved : (d.defaultTarget||5);
 
   function drawGauge(prob){
     var p = Math.min(100, Math.max(0, prob));
